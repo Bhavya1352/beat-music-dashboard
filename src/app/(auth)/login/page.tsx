@@ -1,87 +1,93 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Music } from 'lucide-react';
 
-export default function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+const LoginPage = () => {
+  const [isLogin, setIsLogin] = useState(true);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // useEffect(() => {
+  //   if (localStorage.getItem('isLoggedIn')) {
+  //     router.push('/dashboard');
+  //   }
+  // }, [router]);
+
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
+    localStorage.setItem('isLoggedIn', 'true');
+    router.push('/dashboard');
+  };
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
-      return;
-    }
-
-    try {
-      const response = await fetch(`/api/auth?username=${username}&password=${password}`);
-      const data = await response.json();
-
-      if (response.ok) {
-        // Mock authentication successful
-        console.log('Login successful:', data);
-        // In a real app, store token/session here
-        router.push('/dashboard');
-      } else {
-        setError(data.message || 'Login failed.');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('An unexpected error occurred.');
-    }
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem('isLoggedIn', 'true');
+    router.push('/dashboard');
   };
 
   return (
-    <div className="w-full max-w-md rounded-lg bg-white/10 p-8 shadow-xl backdrop-blur-sm">
-      <h1 className="mb-6 text-center text-3xl font-bold text-white">Login</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="username" className="mb-2 block text-sm font-medium text-white">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="w-full rounded-md border border-gray-300 bg-white/20 p-3 text-white placeholder-gray-200 focus:border-blue-500 focus:outline-none"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    // The main container fills the screen, centers content, and has padding
+    <div className="relative min-h-screen w-full flex items-center justify-center p-4 overflow-hidden animated-gradient-bg">
+      
+      {/* Animated Blobs in the background */}
+      <div 
+        className="blob w-72 h-72 bg-purple-500 top-1/4 left-1/4" 
+        style={{ animation: 'move-blob-1 15s infinite alternate' }}
+      ></div>
+      <div 
+        className="blob w-80 h-80 bg-pink-500 bottom-1/4 right-1/4" 
+        style={{ animation: 'move-blob-2 18s infinite alternate' }}
+      ></div>
+
+      {/* The Centered "Beautiful Shape" Container */}
+      <div className="login-form-container p-4 space-y-6 bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 animate-fade-in max-w-md w-full overflow-auto">
+        <div className="flex justify-center">
+          <div className="p-3 bg-white/20 rounded-full">
+            <Music className="text-white animate-pulse" size={40} />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password" className="mb-2 block text-sm font-medium text-white">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="w-full rounded-md border border-gray-300 bg-white/20 p-3 text-white placeholder-gray-200 focus:border-blue-500 focus:outline-none"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-          />
-        </div>
-        {error && <p className="text-center text-red-300">{error}</p>}
-        <button
-          type="submit"
-          className="w-full rounded-md bg-blue-600 p-3 font-semibold text-white transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          Sign In
-        </button>
-      </form>
-      <p className="mt-6 text-center text-sm text-white">
-        Don't have an account?{' '}
-        <Link href="/signup" className="font-medium text-blue-300 hover:underline">
-          Sign Up
-        </Link>
-      </p>
+        <h1 className="text-2xl font-bold text-center text-white">
+          {isLogin ? 'Welcome Back' : 'Create an Account'}
+        </h1>
+        {isLogin ? (
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200">Email</label>
+              <input type="email" id="email" required className="mt-1 block w-full px-4 py-2 bg-black/20 border border-white/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white placeholder-gray-400" placeholder="you@example.com" />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200">Password</label>
+              <input type="password" id="password" required className="mt-1 block w-full px-4 py-2 bg-black/20 border border-white/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white placeholder-gray-400" placeholder="••••••••" />
+            </div>
+            <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-150 ease-in-out transform hover:scale-105">Sign In</button>
+          </form>
+        ) : (
+          <form onSubmit={handleSignup} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-200">Name</label>
+              <input type="text" id="name" required className="mt-1 block w-full px-4 py-2 bg-black/20 border border-white/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white placeholder-gray-400" placeholder="Your Name" />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200">Email</label>
+              <input type="email" id="email" required className="mt-1 block w-full px-4 py-2 bg-black/20 border border-white/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white placeholder-gray-400" placeholder="you@example.com" />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200">Password</label>
+              <input type="password" id="password" required className="mt-1 block w-full px-4 py-2 bg-black/20 border border-white/30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-white placeholder-gray-400" placeholder="••••••••" />
+            </div>
+            <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-sm font-bold text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-all duration-150 ease-in-out transform hover:scale-105">Sign Up</button>
+          </form>
+        )}
+        <p className="text-center text-sm text-gray-200">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+          <button onClick={() => setIsLogin(!isLogin)} className="font-medium text-pink-400 hover:text-pink-300 transition-colors">
+            {isLogin ? 'Sign Up' : 'Sign In'}
+          </button>
+        </p>
+      </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

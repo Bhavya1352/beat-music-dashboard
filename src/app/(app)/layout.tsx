@@ -14,8 +14,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen text-white animated-gradient-bg">
         <nav className="bg-gray-800 p-4 shadow-md">
           <div className="container mx-auto flex items-center justify-between">
             <Link href="/dashboard" className="text-2xl font-bold text-white">
@@ -38,7 +37,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
         <main className="container mx-auto p-4">{children}</main>
-      </body>
-    </html>
+    </div>
   );
 }

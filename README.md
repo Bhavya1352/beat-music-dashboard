@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beat Music Dashboard
+
+A mini music distribution dashboard with a focus on UI/UX, built with Next.js, TypeScript, and Tailwind CSS.
+
+## Features
+
+- 🎵 **Track Management:** View, add, and see details of your music tracks.
+- 🔐 **Immersive Authentication:** A beautiful login/signup page with a gradient background, glassmorphism, and animations.
+- 📈 **Interactive Dashboard:** A rich dashboard with search, sorting, pagination, and a "Now Playing" preview.
+- 📱 **Responsive Design:** The application is fully responsive and looks great on all devices, with a table that collapses into cards on mobile.
+- 🎨 **Dark/Light Theme:** Switch between dark and light mode with a single click.
+- ✨ **Micro-interactions & Animations:** Subtle animations and micro-interactions to enhance the user experience.
+- 🚀 **Modern Tech Stack:** Built with the latest technologies like Next.js App Router, TypeScript, and Tailwind CSS.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1.  Clone the repository:
+
+    ```bash
+    git clone <repository-url>
+    ```
+
+2.  Navigate to the project directory:
+
+    ```bash
+    cd beat-music-dashboard
+    ```
+
+3.  Install the dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4.  Run the development server:
+
+    ```bash
+    npm run dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This application is ready to be deployed on [Vercel](https://vercel.com/), the creators of Next.js.
 
-## Learn More
+1.  Push your code to a Git repository (e.g., GitHub, GitLab, Bitbucket).
+2.  Go to the Vercel dashboard and click on "Add New..." > "Project".
+3.  Import your Git repository.
+4.  Vercel will automatically detect that you are using Next.js and configure the build settings for you.
+5.  Click "Deploy" and your application will be live in a few minutes.
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshots & GIFs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*It is highly recommended to add screenshots and GIFs of the application here. They have a great impact on the presentation of the project.*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Login Page
 
-## Deploy on Vercel
+*(Add a screenshot or GIF of the animated login page here)*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Dashboard
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*(Add a screenshot or GIF of the dashboard with its animations here)*
+
+### Upload Page
+
+*(Add a screenshot or GIF of the upload page with the confetti animation here)*
+
+### Track Details
+
+*(Add a screenshot of the track details page here)*
+
+## Project Structure
+
+```
+/src
+├── app
+│   ├── (app)                 # Main application pages
+│   │   ├── dashboard
+│   │   ├── track
+│   │   │   └── [id]
+│   │   └── upload
+│   ├── (auth)                # Authentication pages
+│   │   └── login
+│   └── api                   # API routes
+│       └── tracks
+├── components                # Reusable components
+│   ├── Navbar.tsx
+│   ├── NowPlayingPreview.tsx
+│   ├── ThemeSwitcher.tsx
+│   ├── TrackForm.tsx
+│   └── TrackTable.tsx
+├── context                   # React context
+│   └── ThemeContext.tsx
+└── lib                       # Utility functions
+```

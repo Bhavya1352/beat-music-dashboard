@@ -1,78 +1,77 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Track } from '../../../api/tracks/route';
+import Image from 'next/image';
 
-export default function TrackDetailsPage() {
-  const { id } = useParams();
-  const [track, setTrack] = useState<Track | null>(null);
+const TrackDetailsPage = ({ params }: { params: { id: string } }) => {
+  const [track, setTrack] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      const fetchTrackDetails = async () => {
-        try {
-          const response = await fetch(`/api/tracks/${id}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-          setTrack(data);
-        } catch (err) {
-          console.error('Failed to fetch track details:', err);
-          setError('Failed to load track details.');
-        } finally {
-          setLoading(false);
+    const fetchTrack = async () => {
+      try {
+        const res = await fetch(`/api/tracks/${params.id}`);
+        if (!res.ok) {
+          throw new Error('Track not found');
         }
-      };
-
-      fetchTrackDetails();
-    }
-  }, [id]);
+        const data = await res.json();
+        setTrack(data);
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTrack();
+  }, [params.id]);
 
   if (loading) {
-    return <div className="text-center text-white">Loading track details...</div>;
+    return <div className="text-center py-10">Loading track details...</div>;
   }
 
-  if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
-  }
-
-  if (!track) {
-    return <div className="text-center text-white">Track not found.</div>;
+  if (error || !track) {
+    return <div className="text-center py-10">Track not found</div>;
   }
 
   return (
-    <div className="p-4">
-      <h1 className="mb-6 text-3xl font-bold text-white">Track Details</h1>
-      <div className="max-w-lg rounded-lg bg-gray-800 p-6 shadow-md">
-        <p className="mb-2 text-lg">
-          <span className="font-semibold text-gray-300">Title:</span> {track.title}
-        </p>
-        <p className="mb-2 text-lg">
-          <span className="font-semibold text-gray-300">Artist:</span> {track.artistName}
-        </p>
-        <p className="mb-2 text-lg">
-          <span className="font-semibold text-gray-300">Release Date:</span> {track.releaseDate}
-        </p>
-        <p className="mb-2 text-lg">
-          <span className="font-semibold text-gray-300">Genre:</span> {track.genre}
-        </p>
-        <p className="mb-4 text-lg">
-          <span className="font-semibold text-gray-300">Status:</span>{' '}
-          <span
-            className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${track.status === 'Approved' ? 'bg-green-100 text-green-800' : track.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}
-          >
-            {track.status}
-          </span>
-        </p>
-        <Link href="/dashboard" className="text-blue-400 hover:underline">
-          Back to Dashboard
-        </Link>
+    <div className="container mx-auto px-4 py-8 animate-fade-in">
+      <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 mb-4 inline-block animate-slide-in">
+        &larr; Back to Dashboard
+      </Link>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl overflow-hidden">
+        <div className="md:flex">
+          <div className="md:flex-shrink-0">
+            <Image 
+              className="h-48 w-full object-cover md:w-48 transform hover:scale-105 transition-transform duration-300" 
+              src={`https://picsum.photos/seed/${track.id}/400/400`} 
+              alt="Album Art" 
+              width={400} 
+              height={400} 
+            />
+          </div>
+          <div className="p-8">
+            <div className="uppercase tracking-wide text-sm text-indigo-500 dark:text-indigo-400 font-semibold">{track.genre}</div>
+            <h1 className="mt-1 text-3xl leading-tight font-extrabold text-gray-900 dark:text-white">{track.title}</h1>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">{track.artist}</p>
+            <div className="mt-4 flex items-center">
+              <span className="text-gray-500 dark:text-gray-400">{track.releaseDate}</span>
+              <span className="mx-2 text-gray-500 dark:text-gray-400">&bull;</span>
+              <span
+                className={`py-1 px-3 rounded-full text-xs ${{
+                  Published: "bg-green-200 text-green-800",
+                  Pending: "bg-yellow-200 text-yellow-800",
+                  Rejected: "bg-red-200 text-red-800",
+                }[track.status]}`}>
+                {track.status}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default TrackDetailsPage;

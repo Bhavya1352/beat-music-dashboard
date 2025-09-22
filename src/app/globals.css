@@ -1,28 +1,22 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #1a202c; /* Dark background */
+  --foreground: #e2e8f0; /* Light foreground */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Animated Gradient Background - More Unique Color Changing */
@@ -48,4 +42,80 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes row-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-row-appear {
+  animation: row-appear 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Blob Animation */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.7;
+}
+
+@keyframes move-blob-1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(100px, 80px) scale(1.2); }
+  50% { transform: translate(-50px, -100px); }
+  75% { transform: translate(80px, -50px) scale(0.8); }
+}
+
+@keyframes move-blob-2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-80px, -60px) scale(0.8); }
+  50% { transform: translate(120px, 100px); }
+  75% { transform: translate(40px, 50px) scale(1.2); }
+}
+
+.login-form-container {
+  width: 90%;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 10;
 }

@@ -1,6 +1,3 @@
-import { NextResponse } from "next/server";
-
-// We are exporting this so we can use it directly in our server components
 export let tracks = [
   {
     id: 1,
@@ -43,14 +40,3 @@ export let tracks = [
     status: "Published",
   },
 ];
-
-export async function GET() {
-  return NextResponse.json(tracks);
-}
-
-export async function POST(request: Request) {
-  const newTrack = await request.json();
-  newTrack.id = tracks.length + 1;
-  tracks.push(newTrack);
-  return NextResponse.json(newTrack, { status: 201 });
-}
