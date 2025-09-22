@@ -1,4 +1,4 @@
-export let tracks = [
+export const tracks = [
   {
     id: 1,
     title: "Sunset Drive",

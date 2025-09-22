@@ -18,7 +18,7 @@ const TrackDetailsPage = ({ params }: { params: { id: string } }) => {
         }
         const data = await res.json();
         setTrack(data);
-      } catch (err) {
+      } catch (_err) {
         setError(true);
       } finally {
         setLoading(false);

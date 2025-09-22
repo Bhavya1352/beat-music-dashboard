@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 // We are exporting this so we can use it directly in our server components
-export let tracks = [
+export const tracks = [
   {
     id: 1,
     title: "Sunset Drive",

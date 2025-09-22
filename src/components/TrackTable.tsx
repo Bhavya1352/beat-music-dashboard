@@ -12,7 +12,7 @@ const TrackTable = ({ tracks }) => {
   const itemsPerPage = 5;
 
   const sortedTracks = useMemo(() => {
-    let sortableTracks = [...tracks];
+    const sortableTracks = [...tracks];
     if (sortConfig !== null) {
       sortableTracks.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {

@@ -1,6 +1,5 @@
 'use client';
 
-import type { Metadata } from "next"; // Keep Metadata import for type, but it won't be used directly in client component
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
