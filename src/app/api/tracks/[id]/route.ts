@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server"; // Import NextRequest
+import type { NextRequest, RouteHandlerContext } from "next/server"; // Import NextRequest and RouteHandlerContext
 import { tracks } from "../route"; // Import the in-memory tracks array
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  // This function signature is the standard for Next.js App Router dynamic API routes.
-  // If a Type error persists, it might indicate a specific environment or Next.js version issue.
-  const id = parseInt(params.id);
-  const track = tracks.find(t => t.id === id);
+export async function GET(
+  request: NextRequest,
+  context: RouteHandlerContext<{ id: string }> // Use RouteHandlerContext
+) {
+  const { id } = context.params;
+  const trackId = parseInt(id);
+  const track = tracks.find(t => t.id === trackId);
 
   if (track) {
     return NextResponse.json(track);
