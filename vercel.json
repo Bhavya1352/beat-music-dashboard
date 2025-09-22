@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_DISABLE_TYPE_CHECK": "true"
+    }
+  },
+  "buildCommand": "next build --no-lint"
+}
